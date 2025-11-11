@@ -155,7 +155,9 @@ def generate_trim_sheet_da40ng(regn, pilot_weight, pax_weight, pax1_weight, pax2
             ws["F2"] = "VT-PMA"
         elif regn == "PRH":
             ws["F2"] = "VT-PRH"
-
+        elif regn == "PFB":
+            ws["F2"] = "VT-PFB"
+    
         # Update weights - CORRECTED: D11-D16 to E11-E16
         ws["E11"] = round(float(pilot_weight or 0), 2)
         ws["E12"] = round(float(pax_weight or 0), 2)
@@ -171,6 +173,9 @@ def generate_trim_sheet_da40ng(regn, pilot_weight, pax_weight, pax1_weight, pax2
         elif regn == "PM":
             ws["E9"] = 2032.7
             ws["F9"] = 95.47
+        elif regn == "PFB":
+            ws["E9"] = 2058
+            ws["F9"] = 95.91
 
         # Safe calculation function
         def safe_multiply(a, b):
@@ -301,7 +306,7 @@ def index():
                 data, error = generate_trim_sheet_152(regn, pilot_weight, pax_weight, fuel_left, fuel_right)
             elif regn in ["AGH", "PFA"]:
                 data, error = generate_trim_sheet_172(regn, pilot_weight, pax_weight, fuel_left, fuel_right)
-            elif regn in ["PM", "PRH"]:
+            elif regn in ["PM", "PRH", "PFB"]:
                 data, error = generate_trim_sheet_da40ng(regn, pilot_weight, pax_weight, pax1_weight, pax2_weight, baggage_fwd, baggage_aft, fuel_left, fuel_right)
             else:
                 return render_template("error.html", error="Invalid Aircraft Registration"), 400
